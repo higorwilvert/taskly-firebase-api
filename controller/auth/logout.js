@@ -1,4 +1,4 @@
-import { db } from "../firebase.config.js";
+import { db } from "../../firebase.config.js";
 
 export const handleLogout = async (req, res) => {
   const { id } = req.body;
@@ -12,6 +12,7 @@ export const handleLogout = async (req, res) => {
     await userRef.update({ authenticated: false }).then(() => {
       res.status(200).send({ message: "Logout successful" });
     });
+    console.log(`User with ID: ${id} logged out successfully.`);
   } catch (error) {
     console.error("Error during logout:", error);
     res.status(500).send("Error during logout");

@@ -1,3 +1,5 @@
+import { db } from "../../firebase.config.js";
+
 export const isAuthenticated = async (req, res) => {
   try {
     const { email } = req.query;

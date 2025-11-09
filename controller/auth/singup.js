@@ -1,5 +1,5 @@
-import { hashPassword } from "../utils/password.js";
-import { db } from "../firebase.config.js";
+import { hashPassword } from "../../utils/password.js";
+import { db } from "../../firebase.config.js";
 
 export const handleSignup = async (req, res) => {
   const { email, password } = req.body;

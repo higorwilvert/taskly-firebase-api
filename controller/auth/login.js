@@ -1,5 +1,5 @@
-import { db } from "../firebase.config.js";
-import { handlePassword } from "../utils/password.js";
+import { db } from "../../firebase.config.js";
+import { handlePassword } from "../../utils/password.js";
 
 export const handleLogin = async (req, res) => {
   try {
