@@ -4,10 +4,13 @@ import { handleLogin } from "../controller/auth/login.js";
 import { getSubjects } from "../controller/subjects/getSubjects.js";
 import { handleVerifyAuthentication } from "../controller/auth/verifyAuthentication.js";
 import { createSubjects } from "../controller/subjects/createSubjects.js";
+import { deleteSubject } from "../controller/subjects/deleteSubjects.js";
+import { updateSubject } from "../controller/subjects/updateSubject.js";
 
 export const routes = (app) => {
-  app.get("/subjects/getSubjects", getSubjects);
-
+  app.patch("/subjects/updateSubject", updateSubject);
+  app.delete("/subjects/deleteSubject", deleteSubject);
+  app.post("/subjects/getSubjects", getSubjects);
   app.post("/subjects/createSubjects", createSubjects);
   app.post("/verifyAuthentication", handleVerifyAuthentication);
   app.post("/login", handleLogin);

@@ -8,7 +8,10 @@ export const getSubjects = async (req, res) => {
       .doc(id)
       .collection("subjects")
       .get();
-    const subjects = snapshot.docs.map((doc) => ({ ...doc.data() }));
+    const subjects = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
     res.status(200).send({ newSubject: subjects });
   } catch (error) {
     console.error("Error fetching subjects:", error);

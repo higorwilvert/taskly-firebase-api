@@ -1,13 +1,14 @@
 import { db } from "../../firebase.config.js";
 
 export const createSubjects = (req, res) => {
-  const { id, subject = {} } = req.body;
-
+  const { id, subject } = req.body;
+  console.log(subject);
   if (
     !subject.classTime ||
     !subject.collegePeriod ||
     !subject.subjectName ||
-    !subject.teacherName
+    !subject.teacherName ||
+    !subject.color
   ) {
     return res.status(400).json({ error: "All fields are required" });
   }
@@ -20,6 +21,7 @@ export const createSubjects = (req, res) => {
       collegePeriod: subject.collegePeriod,
       subjectName: subject.subjectName,
       teacherName: subject.teacherName,
+      color: subject.color,
     })
     .then(() => {
       res.status(201).json({ message: "Subject created successfully" });
