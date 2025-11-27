@@ -33,6 +33,41 @@ import {
   updateTaskController
 } from "../controller/tasks/updateTask.js";
 
+// Note controllers (novos e retrocompatíveis)
+import {
+  createNoteController
+} from "../controller/notes/createNotes.js";
+import {
+  deleteNoteController
+} from "../controller/notes/deleteNotes.js";
+import {
+  getNoteByIdController,
+  getNotesController
+} from "../controller/notes/getNotes.js";
+import {
+  updateNoteController
+} from "../controller/notes/updateNote.js";
+
+// Attendance controllers
+import {
+  deleteAttendanceController
+} from "../controller/attendance/deleteAttendance.js";
+import {
+  getAttendanceByDateController,
+  getAttendanceController,
+  getAttendanceStatsController
+} from "../controller/attendance/getAttendance.js";
+import {
+  upsertAttendanceController
+} from "../controller/attendance/upsertAttendance.js";
+
+// Dashboard controllers
+import {
+  getDashboardOverviewController,
+  getTasksSummaryController,
+  getUpcomingTasksController
+} from "../controller/dashboard/getDashboard.js";
+
 export const routes = (app) => {
   // ========================================
   // ROTAS DE AUTENTICAÇÃO
@@ -58,4 +93,43 @@ export const routes = (app) => {
   app.post("/tasks", createTaskController);              // Criar nova task
   app.patch("/tasks/:taskId", updateTaskController);     // Atualizar task
   app.delete("/tasks/:taskId", deleteTaskController);    // Deletar task
+
+  // ========================================
+  // ROTAS DE ANOTAÇÕES (NOTES) - PADRÃO REST
+  // ========================================
+  app.get("/notes", getNotesController);                 // Buscar todas as anotações
+  app.get("/notes/:noteId", getNoteByIdController);      // Buscar uma anotação específica
+  app.post("/notes", createNoteController);              // Criar nova anotação
+  app.patch("/notes/:noteId", updateNoteController);     // Atualizar anotação
+  app.delete("/notes/:noteId", deleteNoteController);    // Deletar anotação
+
+  // ========================================
+  // ROTAS DE PRESENÇA/FALTAS (ATTENDANCE) - PADRÃO REST
+  // ========================================
+  // Buscar todas as presenças de uma matéria (com filtros opcionais)
+  app.get("/subjects/:subjectId/attendance", getAttendanceController);
+  
+  // Buscar registro de presença de uma data específica
+  app.get("/subjects/:subjectId/attendance/:date", getAttendanceByDateController);
+  
+  // Buscar estatísticas de presença de uma matéria
+  app.get("/subjects/:subjectId/attendance-stats", getAttendanceStatsController);
+  
+  // Criar ou atualizar registro de presença (upsert baseado na data)
+  app.post("/subjects/:subjectId/attendance", upsertAttendanceController);
+  
+  // Deletar registro de presença
+  app.delete("/subjects/:subjectId/attendance/:date", deleteAttendanceController);
+
+  // ========================================
+  // ROTAS DE DASHBOARD - PADRÃO REST
+  // ========================================
+  // Buscar overview completo do dashboard (tasks + subjects + attendance)
+  app.get("/dashboard", getDashboardOverviewController);
+  
+  // Buscar apenas resumo de tarefas
+  app.get("/dashboard/tasks-summary", getTasksSummaryController);
+  
+  // Buscar apenas próximas tarefas
+  app.get("/dashboard/upcoming-tasks", getUpcomingTasksController);
 };
